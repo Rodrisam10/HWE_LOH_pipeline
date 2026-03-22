@@ -1,0 +1,17 @@
+project:
+  repo_root: F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense
+  data_root: F:/Documentos/UNMSM/TESIS
+
+inputs:
+  sqlite: F:/Documentos/UNMSM/TESIS/GEOmetadb.sqlite
+  gse_candidates_csv: F:/Documentos/UNMSM/TESIS/input/GSE_candidates.csv
+  soft_gse12906: F:/Documentos/UNMSM/TESIS/results/quarantine_maybe/GSE12906_family.soft.gz
+
+intermediate:
+  parsed_dir_gse12906: F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906
+  platform_header_gse12906: F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906/header_GSE12906.tsv
+
+outputs:
+  matrix_csv: F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv
+  counts_csv: F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_geno_counts_AA_AB_BB.csv
+  curated_dir: F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense/results_curated/gse12906

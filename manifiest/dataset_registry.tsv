@@ -1,0 +1,7 @@
+dataset_id	source_type	source_url	local_expected_path	size_mb_approx	sha256	used_in_stage	notes
+GEOmetadb_sqlite	sqlite	https://www.ncbi.nlm.nih.gov/geo/info/geo_paccess.html	F:/Documentos/UNMSM/TESIS/GEOmetadb.sqlite	18669.87	NA	01_discovery	Not tracked in git
+GSE12906_SOFT	geo_soft	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE12nnn/GSE12906/soft/	F:/Documentos/UNMSM/TESIS/results/quarantine_maybe/GSE12906_family.soft.gz	1090.91	NA	02_extract	Not tracked in git
+GSE12906_PARSED	parsed_tables	NA	F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906	5459.08	NA	03_build	Not tracked in git
+GSE12906_PLATFORM_HEADER	platform_header	derived	F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906/header_GSE12906.tsv	719.52	NA	03_build	Derived from SOFT
+GSE12906_MATRIX	matrix_csv	derived	F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv	263.72	NA	03_build	Derived from parsed tables
+GSE12906_COUNTS	counts_csv	derived	F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_geno_counts_AA_AB_BB.csv	15.97	NA	03_build	Derived from matrix

@@ -1,0 +1,25 @@
+# Large raw and derived data
+*.sqlite
+*.sqlite.gz
+*.soft
+*.soft.gz
+
+# Workspace heavy directories outside curated outputs
+rawData/
+results/parsed_tables/
+results/hits_confirmados/
+results/quarantine_maybe/
+
+# Large assay outputs
+HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv
+HWE-LOH_assay/data/GSE12906_geno_counts_AA_AB_BB.csv
+
+# Logs and temp
+*.log
+*.tmp
+tmp/
+
+# R artifacts
+.Rhistory
+.RData
+.Rproj.user/

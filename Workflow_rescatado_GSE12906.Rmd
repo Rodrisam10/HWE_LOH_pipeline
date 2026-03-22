@@ -1,0 +1,184 @@
+---
+title: "Workflow rescatado HWE-LOH (piloto GSE12906)"
+author: "Forense de proyecto"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# 1) Objetivo y alcance
+
+Este documento formaliza el workflow rescatado del piloto `GSE12906` para replicacion HWE-LOH, priorizando trazabilidad y bajo costo operativo.
+
+Alcance:
+
+1. Cribado de SOFT utiles.
+2. Parsing de tablas por muestra (GSM).
+3. Extraccion de header de plataforma.
+4. Construccion de matriz de genotipos y salida para analisis HWE-LOH.
+
+Exclusion explicita: carpeta `Vaccinium`.
+
+# 2) Estructura canonica del aislamiento forense
+
+```{r}
+forense_root <- "F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense"
+tesis_root   <- "F:/Documentos/UNMSM/TESIS"
+
+scripts_dir  <- file.path(forense_root, "scripts")
+manifiest_dir <- file.path(forense_root, "manifiest")
+
+list.files(forense_root)
+```
+
+Scripts canonicos dentro de la carpeta forense:
+
+- `scripts/01_discovery/query_gse_from_sqlite.R`
+- `scripts/01_discovery/scout_master.sh`
+- `scripts/01_discovery/inspector_gadget.awk`
+- `scripts/02_extract/diagnose_v2.sh`
+- `scripts/02_extract/parse_soft_v11.awk`
+- `scripts/02_extract/extract_platform_force.sh`
+- `scripts/03_build/build_snp_matrix.R`
+- `scripts/03_build/compute_genotype_counts.R`
+
+# 3) Inventario de datos grandes (no copiar)
+
+Se referencian en sitio, sin moverlos:
+
+```{r}
+grandes <- data.frame(
+  artefacto = c(
+    "GEOmetadb.sqlite",
+    "GSE12906_family.soft.gz",
+    "parsed_tables/GSE12906 (directorio)",
+    "header_GSE12906.tsv",
+    "GSE12906_Genotype_Matrix.csv"
+  ),
+  ruta = c(
+    "F:/Documentos/UNMSM/TESIS/GEOmetadb.sqlite",
+    "F:/Documentos/UNMSM/TESIS/results/quarantine_maybe/GSE12906_family.soft.gz",
+    "F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906",
+    "F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906/header_GSE12906.tsv",
+    "F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv"
+  ),
+  stringsAsFactors = FALSE
+)
+
+grandes
+```
+
+# 4) Etapa A - Cribado de SOFT
+
+Script: `scripts/01_discovery/scout_master.sh`  
+Detector: `scripts/01_discovery/inspector_gadget.awk`
+
+Salida esperada:
+
+- `results/hits_confirmados/`
+- `results/quarantine_maybe/`
+- `results/cribado_reporte.csv`
+
+Ejecucion (Git Bash / terminal):
+
+```bash
+TESIS_ROOT=/f/Documentos/UNMSM/TESIS \
+bash "F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense/scripts/01_discovery/scout_master.sh"
+```
+
+Nota: para el piloto GSE12906, el SOFT ya esta identificado y disponible.
+
+# 5) Etapa B - Parsing de tablas utiles
+
+Scripts principales (conforme a documentacion original):
+
+- `scripts/02_extract/parse_soft_v11.awk`
+- `scripts/02_extract/diagnose_v2.sh`
+
+Funcion:
+
+1. Buscar `!sample_table_begin` y `!sample_table_end`.
+2. Extraer tabla por GSM a `.tsv`.
+3. Conservar metadatos de muestra en cabecera comentada.
+
+Ejecucion recomendada:
+
+```bash
+TESIS_ROOT=/f/Documentos/UNMSM/TESIS \
+bash "F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense/scripts/02_extract/diagnose_v2.sh"
+```
+
+Salida objetivo para el piloto:
+
+- `F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906/`
+
+## Validacion ligera de parseo
+
+```{r}
+gse12906_dir <- file.path(tesis_root, "results/parsed_tables/GSE12906")
+tsv_files <- list.files(gse12906_dir, pattern = "^GSM.*\\.tsv$", full.names = TRUE)
+length(tsv_files)
+```
+
+# 6) Etapa C - Extraccion de header de plataforma
+
+Script: `scripts/02_extract/extract_platform_force.sh`
+
+Uso:
+
+```bash
+TESIS_ROOT=/f/Documentos/UNMSM/TESIS \
+bash "F:/Documentos/UNMSM/TESIS/HWE-LOH_GSE12906_forense/scripts/02_extract/extract_platform_force.sh"
+```
+
+Salida:
+
+- `results/parsed_tables/GSE12906/header_GSE12906.tsv`
+
+# 7) Etapa D - Construccion de matriz y analisis HWE-LOH
+
+Scripts de referencia:
+
+- `scripts/03_build/build_snp_matrix.R`
+- `scripts/03_build/compute_genotype_counts.R`
+- `scripts/03_build/01_build_snp_matrix_legacy.Rmd` (legacy)
+
+Entradas principales:
+
+- `results/parsed_tables/GSE12906/GSM*.tsv`
+- `results/parsed_tables/GSE12906/header_GSE12906.tsv`
+
+Salidas principales:
+
+- `HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv`
+- `HWE-LOH_assay/data/GSE12906_geno_counts_AA_AB_BB.csv`
+- `HWE-LOH_assay/plots/*.png`
+
+Nota metodologica: el script actual implementa una aproximacion practica para el piloto, no una replica exacta del test exacto HWE-LOH + MLE del paper.
+
+# 8) Trazabilidad forense oficial
+
+Los resultados del analisis forense se almacenan en:
+
+- `HWE-LOH_GSE12906_forense/manifiest/MANIFIESTO_UNIDADES_ANALISIS.tsv`
+- `HWE-LOH_GSE12906_forense/manifiest/MAPA_RENOMBRES_COMPATIBILIDAD.tsv`
+- `HWE-LOH_GSE12906_forense/manifiest/INVENTARIO_GRANDES_REFERENCIAS.tsv`
+- `HWE-LOH_GSE12906_forense/manifiest/VALIDACION_LIGERA.md`
+- `HWE-LOH_GSE12906_forense/manifiest/PLAN_AISLAMIENTO_LOGICO.md`
+
+```{r}
+list.files(manifiest_dir)
+```
+
+# 9) Recomendaciones operativas
+
+1. Mantener `GSE12906` como caso piloto oficial hasta cerrar QA de codificacion de genotipos.
+2. Ejecutar por lotes pequenos para cualquier extension multi-GSE.
+3. No relocalizar archivos masivos; usar rutas absolutas estables.
+4. Versionar scripts canonicos en esta carpeta forense y conservar originales historicos.

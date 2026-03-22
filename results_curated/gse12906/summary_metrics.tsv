@@ -1,0 +1,5 @@
+metric	value	notes
+pilot_gse	GSE12906	Validated pilot series
+parsed_gsm_tables	332	Count of GSM*.tsv in parsed directory
+matrix_rows	607264	From generated genotype matrix snapshot
+counts_rows	177938	From generated counts snapshot

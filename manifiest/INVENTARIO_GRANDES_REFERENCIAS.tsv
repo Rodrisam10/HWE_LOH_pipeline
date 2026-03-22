@@ -1,0 +1,10 @@
+prioridad	artefacto	ruta_absoluta	tamano_aprox_mb	rol_en_pipeline	politica_aislamiento	nota
+critica	Base metadata GEO	F:/Documentos/UNMSM/TESIS/GEOmetadb.sqlite	18669.87	Fuente de consulta SQL para seleccionar GSE	NO COPIAR	Mantener en sitio y registrar version/fecha
+critica	SOFT piloto comprimido	F:/Documentos/UNMSM/TESIS/results/quarantine_maybe/GSE12906_family.soft.gz	1090.91	Entrada de parsing para tablas GSM	NO COPIAR	Consumir por streaming con zcat
+critica	Salida parseada piloto (directorio)	F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906	5459.08	Repositorio de 332 tablas por muestra	NO COPIAR	Usar como evidencia primaria del parseo
+alta	Header de plataforma GSE12906	F:/Documentos/UNMSM/TESIS/results/parsed_tables/GSE12906/header_GSE12906.tsv	719.52	Mapa SNP -> RS/CHR/BP para anotacion	NO COPIAR	Archivo masivo; acceder en sitio
+alta	Matriz SNP x muestra	F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv	263.72	Intermedio para conteos AA/AB/BB	NO COPIAR	Puede regenerarse desde parsed_tables
+media	Conteos por SNP	F:/Documentos/UNMSM/TESIS/HWE-LOH_assay/data/GSE12906_geno_counts_AA_AB_BB.csv	15.97	Input para estadistica HWE/LOH	COPIA OPCIONAL	Moderado; puede copiarse si se requiere
+media	Quarantine lote completo	F:/Documentos/UNMSM/TESIS/results/quarantine_maybe	>9000	Lote de SOFT recuperables	NO COPIAR	Procesar por lotes pequenos
+media	Parsed_tables global	F:/Documentos/UNMSM/TESIS/results/parsed_tables	(varias decenas de GB)	Historico de parseo multi-GSE	NO COPIAR	Fuera de alcance del piloto salvo referencias
+baja	RawData global	F:/Documentos/UNMSM/TESIS/rawData	(alto)	Rama alterna CEL/crlmm	NO COPIAR	Fuera del alcance de parsing SOFT piloto
