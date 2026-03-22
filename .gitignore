@@ -11,6 +11,7 @@ results/hits_confirmados/
 results/quarantine_maybe/
 manifiest/
 Workflow_rescatado_GSE12906.Rmd
+help_git.txt
 
 # Large assay outputs
 HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv
