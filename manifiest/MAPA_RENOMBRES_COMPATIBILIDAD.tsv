@@ -1,8 +1,0 @@
-categoria	referencia_en_script	ruta_referenciada	ruta_real_detectada	estado	impacto	accion_canonica_recomendada
-AWK detector	scout_master.sh: AWK_SCRIPT	F:/Documentos/UNMSM/TESIS/scripts/inspector_gadget.awk	F:/Documentos/UNMSM/TESIS/scripts/inspector_gadgetv2(borrarv2cuandoejecutes).awk	inconsistente	Puede romper cribado en entorno limpio	Definir `inspector_gadget.awk` como alias estable apuntando a v2
-AWK detector	demo_scout.sh: AWK_SCRIPT	F:/Documentos/UNMSM/TESIS/scripts/inspector_gadget.awk	F:/Documentos/UNMSM/TESIS/scripts/inspector_gadgetv2(borrarv2cuandoejecutes).awk	inconsistente	Demo no reproducible sin ajuste	Mismo alias canonico que en scout_master
-AWK parser	recover_quarantine_v4.sh: AWK_SCRIPT	F:/Documentos/UNMSM/TESIS/scripts/parse_soft_v8.awk	(no existe)	roto	Script no ejecutable tal cual	No usar v4 para piloto; usar `diagnose_v2.sh`
-AWK parser	extract_hits.sh: AWK_SCRIPT	F:/Documentos/UNMSM/TESIS/scripts/parse_soft_v3.awk	(no existe)	roto	Extraccion legacy no reproducible	Retirar de flujo piloto y documentar como obsoleto
-AWK parser principal	diagnose_v2.sh: AWK_SCRIPT	F:/Documentos/UNMSM/TESIS/scripts/parse_soft_v11.awk	F:/Documentos/UNMSM/TESIS/scripts/parse_soft_v11.awk	consistente	Flujo funcional	Mantener como parser canonico del piloto
-Rutas raiz	scripts shell (ROOT_DIR)	/f/Documentos/UNMSM/TESIS	F:/Documentos/UNMSM/TESIS	compatible por entorno git-bash	Baja en entorno actual; media en otros	Parametrizar ROOT_DIR por variable externa
-sqlite naming	Rmd conexion	Geometadb.sqlite	GEOmetadb.sqlite	inconsistente menor	Puede fallar por nombre en entorno case-sensitive	Unificar nombre en Rmd y docs

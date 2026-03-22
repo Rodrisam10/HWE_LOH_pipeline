@@ -9,6 +9,7 @@ rawData/
 results/parsed_tables/
 results/hits_confirmados/
 results/quarantine_maybe/
+manifiest/
 
 # Large assay outputs
 HWE-LOH_assay/data/GSE12906_Genotype_Matrix.csv
